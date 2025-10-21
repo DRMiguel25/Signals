@@ -19,8 +19,8 @@ interface MenuItem {
   styleUrls: ['./navbarlateral.component.scss']
 })
 export class NavbarlateralComponent {
-  userName = 'Edward Tompson';
-  userAvatar = 'https://i.pinimg.com/736x/16/90/23/1690235f3327456bfc41f8d942a4c616.jpg';
+  userName = 'Miguelon';
+  userAvatar = 'https://i.postimg.cc/ZRB3KNKg/image-2025-10-20-204225422.png';
 
 menuItems: MenuItem[] = [
   {
