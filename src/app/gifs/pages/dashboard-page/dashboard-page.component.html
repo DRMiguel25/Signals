@@ -1,5 +1,6 @@
 <div
-  class="bg-slate-100 overflow-x-hidden w-screen h-screen antialiased text-slate-800"
+  class="bg-slate-100 dark:bg-gray-900 overflow-x-hidden w-screen h-screen antialiased 
+         text-slate-800 dark:text-slate-100"
 >
   <div class="flex relative w-screen h-screen">
     
@@ -15,8 +16,9 @@
     
     <main class="flex-1 px-4 flex flex-col w-full h-full overflow-y-auto">
 
-      <div class="md:hidden flex justify-end p-4 sticky top-0 bg-slate-100 z-40 shadow-sm">
-        <button (click)="toggleSidebar()" class="text-gray-800 focus:outline-none">
+      <div class="md:hidden flex justify-end p-4 sticky top-0 
+                 bg-slate-100 dark:bg-gray-900 z-40 shadow-sm">
+        <button (click)="toggleSidebar()" class="text-gray-800 dark:text-slate-100 focus:outline-none">
           <i class="fa-solid fa-bars text-2xl"></i>
         </button>
       </div>

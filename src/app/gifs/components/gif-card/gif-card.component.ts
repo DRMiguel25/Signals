@@ -6,8 +6,8 @@ import { Gif } from '../../interfaces/gif.interface';
   standalone: true,
   imports: [],
   template: `
-    <!-- 🚨 ESTÉTICA: Añadimos 'rounded-xl' y 'hover:scale-[1.02]' para un efecto visual -->
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden 
+    <!-- 🚨 CORREGIDO: Añadimos 'dark:bg-gray-800' al fondo del div principal -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden 
                 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] cursor-pointer">
       <img
         [src]="gif().images.downsized_medium.url"
@@ -17,7 +17,8 @@ import { Gif } from '../../interfaces/gif.interface';
         (error)="onImageError($event)"
       />
       <div class="p-3">
-        <h3 class="text-sm font-medium text-gray-800 truncate" [title]="gif().title">
+        <!-- 🚨 CORREGIDO: Añadimos 'dark:text-slate-100' al texto para que sea visible en modo oscuro -->
+        <h3 class="text-sm font-medium text-gray-800 dark:text-slate-100 truncate" [title]="gif().title">
           {{ gif().title || 'Sin título' }}
         </h3>
       </div>
