@@ -1,17 +1,35 @@
 <div
-  class="bg-slate-100 w-screen h-screen antialiased text-slate-800"
+  class="bg-slate-100 overflow-x-hidden w-screen h-screen antialiased text-slate-800"
 >
-  <div class="flex relative w-screen h-screen"> 
+  <div class="flex relative w-screen h-screen">
     
     <div
       id="menu"
-      class="w-[220px] bg-gray-900 min-h-screen z-10 text-slate-300 fixed left-0 h-screen overflow-y-scroll"
+      [class]="{'translate-x-0': showSidebar(), 'translate-x-full': !showSidebar()}"
+      class="w-[220px] bg-gray-900 z-50 text-slate-300 h-screen overflow-y-scroll 
+             fixed right-0 md:relative md:block md:translate-x-0 
+             transition-transform duration-300"
     >
       <app-side-menu></app-side-menu>
     </div>
+    
+    <main class="flex-1 px-4 flex flex-col w-full h-full overflow-y-auto">
 
-    <div class="ml-[220px] flex-1 px-4 flex flex-col overflow-y-auto"> 
+      <div class="md:hidden flex justify-end p-4 sticky top-0 bg-slate-100 z-40 shadow-sm">
+        <button (click)="toggleSidebar()" class="text-gray-800 focus:outline-none">
+          <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+      </div>
+      
       <router-outlet></router-outlet>
-    </div>
+    </main>
+    
+    @if (showSidebar()) {
+        <div 
+            (click)="toggleSidebar()" 
+            class="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
+        ></div>
+    }
+
   </div>
 </div>
