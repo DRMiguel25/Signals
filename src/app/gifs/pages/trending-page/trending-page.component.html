@@ -1,1 +1,8 @@
-<p>trending-page works!</p>
+<div class="py-6">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">GIFs Populares</h1>
+    <p class="text-gray-600">Descubre los GIFs más populares del momento</p>
+  </div>
+
+  <app-gif-results [gifs]="gifs()" [loading]="loading()" />
+</div>

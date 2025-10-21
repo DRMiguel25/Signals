@@ -1,1 +1,8 @@
-<p>search-page works!</p>
+<div class="py-6">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Buscar GIFs</h1>
+    <app-search-box (onSearchEmit)="onSearch($event)" />
+  </div>
+
+  <app-gif-results [gifs]="gifs()" [loading]="loading()" />
+</div>

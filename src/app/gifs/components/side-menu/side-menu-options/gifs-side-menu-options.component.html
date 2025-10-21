@@ -1,9 +1,34 @@
 <div id="nav" class="w-full px-6">
-  <app-option-menu
-    *ngFor="let item of menuOptions"
-    [title]="item.title"
-    [subtitle]="item.subtitle"
-    [icon]="item.icon"
-    [router]="item.router"
-  ></app-option-menu>
+  
+  @for (item of menuOptions; track item.router) {
+    <app-option-menu
+      [title]="item.title"
+      [subtitle]="item.subtitle"
+      [icon]="item.icon"
+      [router]="item.router" 
+    />
+  }
+
+  @if (searchHistory().length > 0) {
+    <div class="mt-8">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-slate-400 text-xs uppercase font-semibold">Historial</h3>
+        <button
+          (click)="clearHistory()"
+          class="text-slate-500 hover:text-red-400 text-xs transition-colors"
+        >
+          Limpiar
+        </button>
+      </div>
+      
+      @for (term of searchHistory(); track term) {
+        <button
+          (click)="searchFromHistory(term)"
+          class="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded transition-colors mb-1 truncate"
+        >
+          {{ term }}
+        </button>
+      }
+    </div>
+  }
 </div>
