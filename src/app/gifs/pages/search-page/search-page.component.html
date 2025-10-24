@@ -22,9 +22,10 @@
       />
       <button 
         (click)="searchGifs()"
-        class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full transition-colors font-medium"
+        [disabled]="loading()"
+        class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full transition-colors font-medium disabled:opacity-50"
       >
-        Buscar
+        {{ loading() ? 'Buscando...' : 'Buscar' }}
       </button>
     </div>
   </div>
@@ -32,75 +33,37 @@
   <!-- Filtros de categorías -->
   <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
     <button 
-      (click)="filterByCategory('all')"
-      [class]="currentCategory === 'all' 
+      *ngFor="let category of categories"
+      (click)="filterByCategory(category)"
+      [class]="currentCategory === category.id 
         ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
         : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
       type="button" 
       class="focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
     >
-      All categories
-    </button>
-    <button 
-      (click)="filterByCategory('funny')"
-      [class]="currentCategory === 'funny' 
-        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
-        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
-      type="button" 
-      class="focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
-    >
-      Funny
-    </button>
-    <button 
-      (click)="filterByCategory('reactions')"
-      [class]="currentCategory === 'reactions' 
-        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
-        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
-      type="button" 
-      class="focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
-    >
-      Reactions
-    </button>
-    <button 
-      (click)="filterByCategory('animals')"
-      [class]="currentCategory === 'animals' 
-        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
-        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
-      type="button" 
-      class="focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
-    >
-      Animals
-    </button>
-    <button 
-      (click)="filterByCategory('sports')"
-      [class]="currentCategory === 'sports' 
-        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
-        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
-      type="button" 
-      class="focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
-    >
-      Sports
-    </button>
-    <button 
-      (click)="filterByCategory('memes')"
-      [class]="currentCategory === 'memes' 
-        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800' 
-        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white dark:text-white dark:focus:ring-gray-800'"
-      type="button" 
-      class="focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
-    >
-      Memes
+      {{category.label}}
     </button>
   </div>
 
-  <!-- Grid Masonry intercalado (igual que trending) -->
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <!-- Loading indicator -->
+  <div *ngIf="loading()" class="flex justify-center items-center py-16">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600"></div>
+  </div>
+
+  <!-- Grid Masonry -->
+  <div *ngIf="!loading()" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    
+    <!-- Columna 1 -->
     <div class="grid gap-4">
       <div 
         *ngFor="let gif of getColumn(0)" 
         class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
       >
-        <img [src]="gif.url" [alt]="gif.title" class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300">
+        <img 
+          [src]="gif.images.downsized_medium.url" 
+          [alt]="gif.title"
+          class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300"
+        >
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <p class="text-white font-semibold text-sm">{{gif.title}}</p>
@@ -109,9 +72,17 @@
       </div>
     </div>
 
+    <!-- Columna 2 -->
     <div class="grid gap-4">
-      <div *ngFor="let gif of getColumn(1)" class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
-        <img [src]="gif.url" [alt]="gif.title" class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300">
+      <div 
+        *ngFor="let gif of getColumn(1)" 
+        class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+      >
+        <img 
+          [src]="gif.images.downsized_medium.url" 
+          [alt]="gif.title"
+          class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300"
+        >
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <p class="text-white font-semibold text-sm">{{gif.title}}</p>
@@ -120,9 +91,17 @@
       </div>
     </div>
 
+    <!-- Columna 3 -->
     <div class="grid gap-4">
-      <div *ngFor="let gif of getColumn(2)" class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
-        <img [src]="gif.url" [alt]="gif.title" class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300">
+      <div 
+        *ngFor="let gif of getColumn(2)" 
+        class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+      >
+        <img 
+          [src]="gif.images.downsized_medium.url" 
+          [alt]="gif.title"
+          class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300"
+        >
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <p class="text-white font-semibold text-sm">{{gif.title}}</p>
@@ -131,9 +110,17 @@
       </div>
     </div>
 
+    <!-- Columna 4 -->
     <div class="grid gap-4">
-      <div *ngFor="let gif of getColumn(3)" class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer">
-        <img [src]="gif.url" [alt]="gif.title" class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300">
+      <div 
+        *ngFor="let gif of getColumn(3)" 
+        class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+      >
+        <img 
+          [src]="gif.images.downsized_medium.url" 
+          [alt]="gif.title"
+          class="h-auto max-w-full rounded-lg object-cover group-hover:scale-110 transition-transform duration-300"
+        >
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div class="absolute bottom-0 left-0 right-0 p-4">
             <p class="text-white font-semibold text-sm">{{gif.title}}</p>
@@ -141,10 +128,13 @@
         </div>
       </div>
     </div>
+
   </div>
 
-  <div *ngIf="filteredGifs.length === 0" class="text-center py-16">
+  <!-- Mensaje cuando no hay resultados -->
+  <div *ngIf="!loading() && gifs().length === 0" class="text-center py-16">
     <p class="text-2xl text-gray-500 dark:text-gray-400">No se encontraron GIFs</p>
+    <p class="text-gray-400 dark:text-gray-500 mt-2">Intenta con otra búsqueda</p>
   </div>
 
 </div>
