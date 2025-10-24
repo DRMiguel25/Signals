@@ -26,13 +26,13 @@ export class GifsSideMenuOptionsComponent {
   menuOptions: MenuOption[] = [
     {
       icon: 'fa-solid fa-chart-line',
-      title: 'Trending',
+      title: 'Tendencias',
       subtitle: 'Los mejores GIFs',
       router: '/dashboard/trending'
     },
     {
       icon: 'fa-solid fa-magnifying-glass',
-      title: 'Search',
+      title: 'Buscar',
       subtitle: 'Busca tus GIFs favoritos',
       router: '/dashboard/search'
     },

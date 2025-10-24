@@ -25,13 +25,14 @@ export class GifResultsComponent {
   public selectedCategory = signal<string>('all');
 
   categories: CategoryFilter[] = [
-    { id: 'all', label: 'All categories', searchTerm: '' },
-    { id: 'funny', label: 'Funny', searchTerm: 'funny' },
-    { id: 'reactions', label: 'Reactions', searchTerm: 'reactions' },
-    { id: 'animals', label: 'Animals', searchTerm: 'animals' },
-    { id: 'sports', label: 'Sports', searchTerm: 'sports' },
-    { id: 'memes', label: 'Memes', searchTerm: 'memes' }
-  ];
+  { id: 'all', label: 'Todas las categorías', searchTerm: '' },
+  { id: 'funny', label: 'Divertidos', searchTerm: 'divertidos' },
+  { id: 'reactions', label: 'Reacciones', searchTerm: 'reacciones' },
+  { id: 'animals', label: 'Animales', searchTerm: 'animales' },
+  { id: 'sports', label: 'Deportes', searchTerm: 'deportes' },
+  { id: 'memes', label: 'Memes', searchTerm: 'memes' }
+];
+
 
   selectCategory(category: CategoryFilter): void {
     this.selectedCategory.set(category.id);

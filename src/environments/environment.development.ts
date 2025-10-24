@@ -4,10 +4,10 @@ export const environment = {
   // App Info
   appName: "Dash",
   appNumber: "8",
-  appSlogan: "Manage your actions and activities",
+  appSlogan: "Encunentra gifs divertidos",
   
   // User Info
-  welcomeMessage: "Welcome back,",
+  welcomeMessage: "Bienvenido de nuevo",
   userName: "Miguelon",
   userAvatar: "https://i.postimg.cc/ZRB3KNKg/image-2025-10-20-204225422.png",
   
