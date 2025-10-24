@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { OptionMenuComponent } from '../option-menu/option-menu.component';
 import { GiphyService } from '../../../services/giphy.service';
-import { CommonModule } from '@angular/common'; 
-// 🚨 ELIMINADAS: Ya no necesitamos RouterLink ni RouterLinkActive aquí, 
-// pues no se usan directamente en el HTML de este componente.
-// import { RouterLink, RouterLinkActive } from '@angular/router'; 
+import { environment } from '@environments/environment.development';
 
 interface MenuOption {
   icon: string;
@@ -16,13 +13,13 @@ interface MenuOption {
 @Component({
   selector: 'app-gifs-side-menu-options',
   standalone: true,
-  // 🚨 CORREGIDO: El array 'imports' está limpio
-  imports: [OptionMenuComponent, CommonModule], 
+  imports: [OptionMenuComponent], 
   templateUrl: './gifs-side-menu-options.component.html',
-  styleUrls: ['./gifs-side-menu-options.component.scss']
+  styleUrl: './gifs-side-menu-options.component.scss'
 })
 export class GifsSideMenuOptionsComponent {
   private readonly giphyService = inject(GiphyService);
+  public envs = environment;
 
   public searchHistory = this.giphyService.history; 
 

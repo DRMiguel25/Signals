@@ -1,0 +1,48 @@
+<!-- Category Filters -->
+<div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
+  @for (category of categories; track category.id) {
+    <button 
+      type="button" 
+      (click)="selectCategory(category)"
+      [class]="isSelected(category.id) 
+        ? 'text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800'
+        : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800'"
+    >
+      {{ category.label }}
+    </button>
+  }
+</div>
+
+<!-- Loading State -->
+@if (loading()) {
+  <div class="flex justify-center items-center min-h-[400px]">
+    <div class="text-center">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-400">Cargando GIFs...</p>
+    </div>
+  </div>
+}
+
+<!-- Empty State -->
+@else if (gifs().length === 0) {
+  <div class="flex justify-center items-center min-h-[400px] p-4">
+    <div class="text-center text-gray-500 dark:text-gray-400">
+      <p class="text-2xl font-semibold">No se encontraron resultados 😔</p>
+      <p class="mt-2 text-lg">Intenta con otra búsqueda</p>
+    </div>
+  </div>
+}
+
+<!-- Masonry Grid -->
+@else {
+  <div class="grid 
+              grid-cols-2 
+              sm:grid-cols-3 
+              md:grid-cols-4 
+              lg:grid-cols-5 
+              gap-4 p-4">
+    @for (gif of gifs(); track gif.id) {
+      <app-gif-card [gif]="gif" />
+    }
+  </div>
+}

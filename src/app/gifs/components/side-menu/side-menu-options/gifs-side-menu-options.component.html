@@ -1,5 +1,6 @@
 <div id="nav" class="w-full px-6">
   
+  <!-- Menu Options -->
   @for (item of menuOptions; track item.router) {
     <app-option-menu
       [title]="item.title"
@@ -9,24 +10,28 @@
     />
   }
 
+  <!-- Search History Section -->
   @if (searchHistory().length > 0) {
     <div class="mt-8">
       <div class="flex justify-between items-center mb-3">
-        <h3 class="text-slate-400 text-xs uppercase font-semibold">Historial</h3>
+        <h3 class="text-slate-400 text-xs uppercase font-semibold">Recent Searches</h3>
         <button
           (click)="clearHistory()"
           class="text-slate-500 hover:text-red-400 text-xs transition-colors"
         >
-          Limpiar
+          Clear
         </button>
       </div>
       
       @for (term of searchHistory(); track term) {
         <button
           (click)="searchFromHistory(term)"
-          class="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-800 rounded transition-colors mb-1 truncate"
+          class="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700/50 rounded transition-colors mb-1 truncate flex items-center space-x-2"
         >
-          {{ term }}
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="capitalize">{{ term }}</span>
         </button>
       }
     </div>

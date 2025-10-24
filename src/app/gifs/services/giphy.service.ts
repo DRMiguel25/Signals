@@ -1,6 +1,7 @@
 import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Gif, GiphyResponse } from '../interfaces/gif.interface';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
